@@ -16,6 +16,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -26,7 +27,7 @@ public class RequestPostsSteps {
         this.scenarioContext = scenarioContext;
     }
 
-    @Given("^I request for \"([^\"]*)\"$")
+    @Given("I request for {string}")
     public void requestPost(String path) {
         ResponseOptions<Response> responseOptions = new RestfulApiService()
                 .setBasePath(path)
@@ -60,5 +61,13 @@ public class RequestPostsSteps {
     public void assertAuthorName(String authorName) {
         Post post = scenarioContext.get("responseOptions", ResponseOptions.class).getBody().as(Post.class);
         assertThat(post.getAuthor(), equalTo(authorName));
+    }
+
+
+    @Then("the response from the retrieve {string} should be in the correct format")
+    public void assertResponseIsInCorrectFormat(String response) {
+        ResponseOptions retrieveResponseOption = scenarioContext.get("responseOptions", ResponseOptions.class);
+        String body = retrieveResponseOption.getBody().asString();
+        assertThat(body, matchesJsonSchemaInClasspath("schemas/" + response + ".json"));
     }
 }

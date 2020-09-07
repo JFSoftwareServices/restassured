@@ -8,3 +8,8 @@ Feature: Request Posts
     Given I request for "/posts" with pathParameters:
       | post | 1 |
     Then I should see author name as "Karthik KK"
+
+  Scenario: Verify response data for a post request is in the correct format
+    Given I request for "/posts" with pathParameters:
+      | post | 1 |
+    Then the response from the retrieve "post" should be in the correct format
