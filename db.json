@@ -1,0 +1,82 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Selenium with C#",
+      "author": "Karthik KK"
+    },
+    {
+      "id": 2,
+      "title": "Appium",
+      "author": "Karthik KK"
+    },
+    {
+      "id": 3
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "Excellent course",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "Jacob"
+  },
+  "location": [
+    {
+      "id": 1,
+      "city": "Channai",
+      "country": "India",
+      "address": [
+        {
+          "street": "1st street",
+          "flat_no": "4A",
+          "pincode": 321421,
+          "type": "primary"
+        },
+        {
+          "street": "1st street",
+          "flat_no": "4A",
+          "pincode": 321421,
+          "type": "secondary"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "city": "Auckland",
+      "country": "NZ",
+      "address": {
+        "street": "Auckland Central",
+        "flat_no": "140",
+        "pincode": 321421
+      }
+    }
+  ],
+  "address": {
+    "primary": [
+      {
+        "City": "Auckland",
+        "State": "Auckland",
+        "Country": "New Zealand",
+        "PinCode": "1010"
+      },
+      {
+        "City": "Queenstown",
+        "State": "Queenstown",
+        "Country": "New Zealand",
+        "PinCode": "34232"
+      }
+    ],
+    "secondary": [
+      {
+        "City": "Channai",
+        "State": "Tamil Nadu",
+        "Country": "India",
+        "PinCode": "600100"
+      }
+    ]
+  }
+}

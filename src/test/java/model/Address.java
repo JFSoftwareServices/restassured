@@ -2,9 +2,6 @@ package model;
 
 import lombok.Data;
 
-
-//More complex
-
 @Data
 public class Address {
     private String street;
