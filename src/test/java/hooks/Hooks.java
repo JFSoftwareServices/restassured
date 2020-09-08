@@ -3,6 +3,7 @@ package hooks;
 import com.github.fge.jsonschema.SchemaVersion;
 import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
@@ -21,15 +22,14 @@ public class Hooks {
 
         RestAssured.config().logConfig(logConfig);
 
-        JsonSchemaFactory factory = JsonSchemaFactory.newBuilder()
-                .setValidationConfiguration(
-                        ValidationConfiguration.newBuilder()
-                                .setDefaultVersion(SchemaVersion.DRAFTV4)
-                                .freeze())
-                .freeze();
+        JsonSchemaValidator.settings = settings().with().jsonSchemaFactory(
+                JsonSchemaFactory.newBuilder().setValidationConfiguration(ValidationConfiguration.newBuilder()
+                        .setDefaultVersion(SchemaVersion.DRAFTV4).freeze()).freeze());
+//                and().with().checkedValidation(false);
+    }
 
-        JsonSchemaValidator.settings = settings()
-                .with().jsonSchemaFactory(factory)
-                .and().with().checkedValidation(false);
+    @After
+    public void after() {
+        JsonSchemaValidator.reset();
     }
 }

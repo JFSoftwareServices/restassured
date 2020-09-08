@@ -1,23 +1,24 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "array",
-  "items": [
-    {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
+  "items": {
+    "anyOf": [
+      {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          }
         },
-        "title": {
-          "type": "string"
-        },
-        "author": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "ids"
-      ]
-    }
-  ]
+        "required": [
+          "id"
+        ]
+      }
+    ]
+  }
 }
