@@ -33,13 +33,18 @@ public class RestfulApiService {
         return this;
     }
 
-    public RestfulApiService setUserDetails(String email, String password) {
-        requestSpecification.body(new UserLoginDetails(email, password));
+    public RestfulApiService setUserDetails(UserLoginDetails userDetails) {
+        requestSpecification.body(userDetails);
         return this;
     }
 
     public RestfulApiService setHeader(Header header) {
         requestSpecification.header(header);
+        return this;
+    }
+
+    public RestfulApiService setBody(Object body) {
+        requestSpecification.body(body);
         return this;
     }
 }

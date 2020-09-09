@@ -11,6 +11,7 @@ import io.restassured.response.Response;
 import io.restassured.response.ResponseOptions;
 import model.Location;
 import model.Post;
+import model.UserLoginDetails;
 import request.HttpMethod;
 import service.AuthenticationService;
 import service.RestfulApiService;
@@ -35,7 +36,7 @@ public class RequestPostsSteps {
     public void authenticate(String path, DataTable dataTable) {
         String email = dataTable.row(1).get(0);
         String password = dataTable.row(1).get(1);
-        String token = new AuthenticationService().authenticate(path, email, password);
+        String token = new AuthenticationService().authenticate(path, new UserLoginDetails(email, password));
         assertThat(token, is(notNullValue()));
         scenarioContext.put("token", token);
     }
@@ -80,7 +81,7 @@ public class RequestPostsSteps {
         }.getType();
         List<Location> locations = scenarioContext.get("responseOptions", ResponseOptions.class)
                 .getBody().as(type, ObjectMapperType.GSON);
-        assertThat(locations.get(0).getAddress().get(0).getStreet(), equalTo("1st street"));
-        assertThat(locations.get(0).getAddress().get(1).getStreet(), equalTo("1st street"));
+        assertThat(locations.get(0).getAddress().get(0).getStreet(), equalTo(name));
+        assertThat(locations.get(0).getAddress().get(1).getStreet(), equalTo(name));
     }
 }
