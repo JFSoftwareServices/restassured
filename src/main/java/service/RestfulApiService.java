@@ -2,13 +2,13 @@ package service;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.http.Header;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseOptions;
 import io.restassured.specification.RequestSpecification;
+import model.UserLoginDetails;
 import request.HttpMethod;
 import request.HttpRequest;
-
-import java.util.Map;
 
 public class RestfulApiService {
     private RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
@@ -28,13 +28,18 @@ public class RestfulApiService {
         return this;
     }
 
-    public RestfulApiService setPathParams(Map<String, String> parameterNameValuePairs) {
-        requestSpecification.pathParams(parameterNameValuePairs);
+    public RestfulApiService setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
         return this;
     }
 
-    public RestfulApiService setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
+    public RestfulApiService setUserDetails(String email, String password) {
+        requestSpecification.body(new UserLoginDetails(email, password));
+        return this;
+    }
+
+    public RestfulApiService setHeader(Header header) {
+        requestSpecification.header(header);
         return this;
     }
 }

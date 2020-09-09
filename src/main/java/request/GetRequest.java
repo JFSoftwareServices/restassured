@@ -1,6 +1,7 @@
 package request;
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseOptions;
 import io.restassured.specification.RequestSpecification;
@@ -11,6 +12,7 @@ public class GetRequest implements HttpRequest {
         return RestAssured.given()
                 .spec(requestSpecification)
                 .log().all()
+                .contentType(ContentType.JSON)
                 .when()
                 .get(uri);
     }

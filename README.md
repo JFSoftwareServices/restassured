@@ -4,7 +4,10 @@ json-server:
 https://github.com/typicode/json-server
 
 Start the json server 
-json-server --watch ${projectRoot}/db.json
+$ npm install
+$ npm run start-auth
+Might need to run
+npm audit fix
 
 ## Course details
 https://www.youtube.com/playlist?list=PL6tu16kXT9PpgqfMbMdzUzDenYgb0gbk0
