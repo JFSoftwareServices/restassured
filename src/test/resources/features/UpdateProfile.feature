@@ -1,9 +1,10 @@
-Feature: Update for author posts profile
+Feature: Update Profile
 
   Background:
-    Given I perform authentication operation for "/auth/login" with body
-      | email           | password |
-      | bruno@email.com | bruno    |
+  Background:
+    Given I authenticate using:
+      | <uri>       | email           | password |
+      | /auth/login | bruno@email.com | bruno    |
 
   Scenario Outline: Update profile name
     When I update profile at uri "<uri>" to name "<name>"

@@ -7,13 +7,11 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import io.restassured.RestAssured;
-import io.restassured.module.jsv.JsonSchemaValidator;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static io.restassured.module.jsv.JsonSchemaValidatorSettings.settings;
 import static org.hamcrest.Matchers.not;
 
 public class SinglePostSchemaTests {

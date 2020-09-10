@@ -1,15 +1,14 @@
-Feature: DeletePosts
-  Test the delete operation
+Feature: Delete Post
 
   Background:
-    Given I perform authentication operation for "/auth/login" with body
-      | email           | password |
-      | bruno@email.com | bruno    |
+    Given I authenticate using:
+      | <uri>       | email           | password |
+      | /auth/login | bruno@email.com | bruno    |
 
   Scenario Outline: Create and then delete a Profile
-    And I post to "<uri>" with "<title>" and "<author>" and <id>
-    When I delete to "<uri>" with id <id>
-    And I request for "<uri>" with id <id>
+    And I create a post using "<uri>" with "<title>" and "<author>" and <id>
+    When I delete a post using "<uri>" with id <id>
+    And I request for a post with "<uri>" and id <id>
     Then I should not see a post
 
     Examples:

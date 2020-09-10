@@ -2,7 +2,6 @@ package steps;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import model.UserLoginDetails;
 import service.AuthenticationService;
 
@@ -17,11 +16,12 @@ public class SharedSetps {
         this.scenarioContext = scenarioContext;
     }
 
-    @Given("I perform authentication operation for {string} with body")
-    public void authenticate(String path, DataTable dataTable) {
-        String email = dataTable.row(1).get(0);
-        String password = dataTable.row(1).get(1);
-        String token = new AuthenticationService().authenticate(path, new UserLoginDetails(email, password));
+    @Given("I authenticate using:")
+    public void authenticate(DataTable dataTable) {
+        String uri = dataTable.row(1).get(0);
+        String email = dataTable.row(1).get(1);
+        String password = dataTable.row(1).get(2);
+        String token = new AuthenticationService().authenticate(uri, new UserLoginDetails(email, password));
         assertThat(token, is(notNullValue()));
         scenarioContext.put("token", token);
     }
