@@ -6,7 +6,6 @@ import io.cucumber.java.en.When;
 import io.restassured.http.Header;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.Response;
-import io.restassured.response.ResponseOptions;
 import model.Location;
 import request.HttpMethod;
 import service.RestfulApiService;
@@ -28,20 +27,20 @@ public class LocationSteps {
     public void assertStreetName(String name) {
         Type type = new TypeToken<List<Location>>() {
         }.getType();
-        List<Location> locations = scenarioContext.get("responseOptions", ResponseOptions.class)
+        List<Location> locations = scenarioContext.get("response", Response.class)
                 .getBody().as(type, ObjectMapperType.GSON);
         assertThat(locations.get(0).getAddress().get(0).getStreet(), equalTo(name));
         assertThat(locations.get(0).getAddress().get(1).getStreet(), equalTo(name));
     }
 
     @When("I request for location using {string}")
-    public void irequestForLocation(String path) {
+    public void requestForLocation(String path) {
         String token = scenarioContext.get("token", String.class);
-        ResponseOptions<Response> responseOptions = new RestfulApiService()
+        Response response = new RestfulApiService()
                 .setBasePath(path)
                 .setHttpMethod(HttpMethod.GET)
                 .setHeader(new Header("Authorization", "Bearer " + token))
                 .send();
-        scenarioContext.put("responseOptions", responseOptions);
+        scenarioContext.put("response", response);
     }
 }

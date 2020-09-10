@@ -5,7 +5,7 @@ Feature: Delete Post
       | <uri>       | email           | password |
       | /auth/login | bruno@email.com | bruno    |
 
-  Scenario Outline: Create and then delete a Profile
+  Scenario Outline: Create and then delete a Post
     And I create a post using "<uri>" with "<title>" and "<author>" and <id>
     When I delete a post using "<uri>" with id <id>
     And I request for a post with "<uri>" and id <id>

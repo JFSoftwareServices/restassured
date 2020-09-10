@@ -1,7 +1,7 @@
 package request;
 
 public enum HttpMethod {
-    POST(new PostRequest()), GET(new GetRequest()), DELETE(new DeleteRequest());
+    GET(new GetRequest()), POST(new PostRequest()), PUT(new PutRequest()), DELETE(new DeleteRequest());
 
     private final HttpRequest httpRequest;
 
