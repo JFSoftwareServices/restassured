@@ -37,6 +37,17 @@ public class RequestPostsSteps {
         scenarioContext.put("responseOptions", responseOptions);
     }
 
+    @When("I request for {string} with id {int}")
+    public void requestForPostWithId(String path, Integer id) {
+        String token = scenarioContext.get("token", String.class);
+        ResponseOptions<Response> responseOptions = new RestfulApiService()
+                .setBasePath(path + "/" + id)
+                .setHttpMethod(HttpMethod.GET)
+                .setHeader(new Header("Authorization", "Bearer " + token))
+                .send();
+        scenarioContext.put("responseOptions", responseOptions);
+    }
+
     @Then("I should see first two author name as {string}")
     public void assertFirstTwoAuthorNames(String authorName) {
         Type type = new TypeToken<List<Post>>() {
@@ -68,5 +79,13 @@ public class RequestPostsSteps {
                 .getBody().as(type, ObjectMapperType.GSON);
         assertThat(locations.get(0).getAddress().get(0).getStreet(), equalTo(name));
         assertThat(locations.get(0).getAddress().get(1).getStreet(), equalTo(name));
+    }
+
+
+    @Then("I should not see a post")
+    public void assertNoPost() {
+        ResponseOptions response = scenarioContext.get("responseOptions", ResponseOptions.class);
+        assertThat(response.getBody().print(), equalTo("{}"));
+
     }
 }

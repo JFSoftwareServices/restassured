@@ -2,16 +2,17 @@ Feature: DeletePosts
   Test the delete operation
 
   Background:
-    Given I ensure to Perform POST operation for "/posts" with body as
-      | id | title              | author            |
-      | 6  | API Testing course | ExecuteAutomation |
+    Given I perform authentication operation for "/auth/login" with body
+      | email           | password |
+      | bruno@email.com | bruno    |
 
-  @smoke
-  Scenario: Verify DELETE operation after POST
-    When  I Perform DELETE operation for "/posts/{postid}/"
-      | postid |
-      | 6      |
-    And I perform GET operation with path parameter for "/posts/{postid}"
-      | postid |
-      | 6      |
-    Then I "should not" see the body with title as "API Testing course"
+  Scenario Outline: Create and then delete a Profile
+    And I post to "<uri>" with "<title>" and "<author>" and <id>
+    When I delete to "<uri>" with id <id>
+    And I request for "<uri>" with id <id>
+    Then I should not see a post
+
+    Examples:
+      | uri    | title       | author | id |
+      | /posts | API Testing | Jide   | 10 |
+      | /posts | C# Testing  | Ade    | 11 |

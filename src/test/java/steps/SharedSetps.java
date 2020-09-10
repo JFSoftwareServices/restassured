@@ -2,6 +2,7 @@ package steps;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import model.UserLoginDetails;
 import service.AuthenticationService;
 
@@ -24,5 +25,4 @@ public class SharedSetps {
         assertThat(token, is(notNullValue()));
         scenarioContext.put("token", token);
     }
-
 }
