@@ -7,7 +7,7 @@ import static request.HttpRequest.request;
 
 public class PutRequest implements HttpRequest {
     @Override
-    public Response send(String uri, RequestSpecification requestSpecification) {
-        return request(requestSpecification).put(uri);
+    public Response send(String path, RequestSpecification requestSpecification) {
+        return request(requestSpecification).put(path);
     }
 }

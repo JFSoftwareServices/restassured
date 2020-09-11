@@ -15,14 +15,14 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 import static org.hamcrest.Matchers.not;
 
 public class SinglePostSchemaTests {
-    private static WireMockServer server = new WireMockServer();
-    private static JsonSchemaFactory jsonSchemaFactory;
-    private static ResponseDefinitionBuilder mockResponse = new ResponseDefinitionBuilder();
     private static final String SINGLE_POST = "{\n" +
             "\"id\": 1,\n" +
             "\"title\": \"TitleValue\",\n" +
             "\"author\": \"AuthorValue\"\n" +
             "}";
+    private static WireMockServer server = new WireMockServer();
+    private static JsonSchemaFactory jsonSchemaFactory;
+    private static ResponseDefinitionBuilder mockResponse = new ResponseDefinitionBuilder();
 
     @BeforeClass
     public static void setUp() {
@@ -33,6 +33,11 @@ public class SinglePostSchemaTests {
                 .freeze();
 
         server.start();
+    }
+
+    @AfterClass
+    public static void teardown() {
+        server.stop();
     }
 
     @Test
@@ -57,10 +62,5 @@ public class SinglePostSchemaTests {
                 .then().assertThat()
                 .body(not(matchesJsonSchemaInClasspath("schemas/post.json")
                         .using(jsonSchemaFactory)));
-    }
-
-    @AfterClass
-    public static void teardown() {
-        server.stop();
     }
 }

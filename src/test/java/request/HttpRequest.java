@@ -10,9 +10,8 @@ public interface HttpRequest {
         return RestAssured.given()
                 .spec(requestSpecification)
                 .log().all()
-                .contentType(ContentType.JSON)
-                .when();
+                .contentType(ContentType.JSON);
     }
 
-    Response send(String uri, RequestSpecification requestSpecification);
+    Response send(String path, RequestSpecification requestSpecification);
 }

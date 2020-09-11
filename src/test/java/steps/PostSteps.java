@@ -37,25 +37,25 @@ public class PostSteps {
     private void request(String path) {
         String token = scenarioContext.get("token", String.class);
         Response response = new RestfulApiService()
-                .setBasePath(path)
+                .setPath(path)
                 .setHttpMethod(HttpMethod.GET)
                 .setHeader(new Header("Authorization", "Bearer " + token))
                 .send();
         scenarioContext.put("response", response);
     }
 
-    @Then("the response from the retrieve {string} should be in the correct format")
-    public void assertInCorrectFormat(String expectedResponseAsString) {
+    @Then("the response from the request for a post should be in the correct format")
+    public void assertInCorrectFormat() {
         Response response = scenarioContext.get("response", Response.class);
         String body = response.getBody().asString();
-        assertThat(body, matchesJsonSchemaInClasspath("schemas/" + expectedResponseAsString + ".json"));
+        assertThat(body, matchesJsonSchemaInClasspath("schemas/post.json"));
     }
 
-    @When("I create a post using {string} with {string} and {string} and {int}")
+    @When("I create a post using {string}, {string}, {string}, {int}")
     public void createPost(String path, String title, String author, Integer id) {
         String token = scenarioContext.get("token", String.class);
         Response response = new RestfulApiService()
-                .setBasePath(path)
+                .setPath(path)
                 .setHttpMethod(HttpMethod.POST)
                 .setHeader(new Header("Authorization", "Bearer " + token))
                 .setBody(Post.builder().title(title).author(author).id(id).build())
@@ -67,7 +67,7 @@ public class PostSteps {
     public void requestForPost(String path, Integer id) {
         String token = scenarioContext.get("token", String.class);
         Response response = new RestfulApiService()
-                .setBasePath(path + "/" + id)
+                .setPath(path + "/" + id)
                 .setHttpMethod(HttpMethod.GET)
                 .setHeader(new Header("Authorization", "Bearer " + token))
                 .send();
@@ -78,19 +78,18 @@ public class PostSteps {
     public void deletePost(String path, Integer id) {
         String token = scenarioContext.get("token", String.class);
         Response response = new RestfulApiService()
-                .setBasePath(path + "/" + id)
+                .setPath(path + "/" + id)
                 .setHttpMethod(HttpMethod.DELETE)
                 .setHeader(new Header("Authorization", "Bearer " + token))
                 .send();
         scenarioContext.put("response", response);
     }
 
-
     @When("I update post title to {string} using {string} and id {int}")
     public void updatePostTitle(String title, String path, Integer id) {
         String token = scenarioContext.get("token", String.class);
         Response response = new RestfulApiService()
-                .setBasePath(path + "/" + id)
+                .setPath(path + "/" + id)
                 .setHttpMethod(HttpMethod.PUT)
                 .setBody(Post.builder().title(title).build())
                 .setHeader(new Header("Authorization", "Bearer " + token))
@@ -105,13 +104,13 @@ public class PostSteps {
     }
 
     @Then("I should not see a post")
-    public void assertNoPost() {
+    public void assertNoPostPresent() {
         Response response = scenarioContext.get("response", Response.class);
         assertThat(response.getBody().print(), equalTo("{}"));
     }
 
     @Then("I should see first two author name as {string}")
-    public void assertFirstTwoAuthorNames(String name) {
+    public void assertAuthorNames(String name) {
         Type type = new TypeToken<List<Post>>() {
         }.getType();
         List<Post> posts = scenarioContext.get("response", Response.class)

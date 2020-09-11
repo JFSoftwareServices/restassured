@@ -15,9 +15,6 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 import static org.hamcrest.Matchers.not;
 
 public class MultiplePostSchemaTests {
-    private static WireMockServer server = new WireMockServer();
-    private static JsonSchemaFactory jsonSchemaFactory;
-    private static ResponseDefinitionBuilder mockResponse = new ResponseDefinitionBuilder();
     private static final String MULTIPLE_POSTS = "[\n" +
             "{\n" +
             "\"id\": 1,\n" +
@@ -33,6 +30,9 @@ public class MultiplePostSchemaTests {
             "\"id\": 3\n" +
             "}\n" +
             "]";
+    private static WireMockServer server = new WireMockServer();
+    private static JsonSchemaFactory jsonSchemaFactory;
+    private static ResponseDefinitionBuilder mockResponse = new ResponseDefinitionBuilder();
 
     @BeforeClass
     public static void setUp() {
@@ -42,6 +42,11 @@ public class MultiplePostSchemaTests {
                                 .setDefaultVersion(SchemaVersion.DRAFTV4).freeze())
                 .freeze();
         server.start();
+    }
+
+    @AfterClass
+    public static void teardown() {
+        server.stop();
     }
 
     @Test
@@ -83,10 +88,5 @@ public class MultiplePostSchemaTests {
         mockResponse.withStatus(200).withBody(MULTIPLE_POSTS.replace("id", "idX"));
         setStub();
         arrangeActAssertNoMatch();
-    }
-
-    @AfterClass
-    public static void teardown() {
-        server.stop();
     }
 }

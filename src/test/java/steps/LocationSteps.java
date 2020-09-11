@@ -11,7 +11,9 @@ import request.HttpMethod;
 import service.RestfulApiService;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,11 +35,14 @@ public class LocationSteps {
         assertThat(locations.get(0).getAddress().get(1).getStreet(), equalTo(name));
     }
 
-    @When("I request for location using {string}")
-    public void requestForLocation(String path) {
+    @When("I request for location using {string}, {string}, {int}")
+    public void requestForLocation(String path, String locationIdKey, Integer locationIdValue) {
+        Map<String, Integer> queryParams = new HashMap<>();
+        queryParams.put(locationIdKey, locationIdValue);
         String token = scenarioContext.get("token", String.class);
         Response response = new RestfulApiService()
-                .setBasePath(path)
+                .setPath(path)
+                .setQueryParams(queryParams)
                 .setHttpMethod(HttpMethod.GET)
                 .setHeader(new Header("Authorization", "Bearer " + token))
                 .send();

@@ -7,7 +7,7 @@ import static request.HttpRequest.request;
 
 public class DeleteRequest implements HttpRequest {
     @Override
-    public Response send(String uri, RequestSpecification requestSpecification) {
-        return request(requestSpecification).delete(uri);
+    public Response send(String path, RequestSpecification requestSpecification) {
+        return request(requestSpecification).delete(path);
     }
 }

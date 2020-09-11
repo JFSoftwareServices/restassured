@@ -2,14 +2,14 @@ Feature: Create Profile
 
   Background:
     Given I authenticate using:
-      | <uri>       | email           | password |
+      | path        | email           | password |
       | /auth/login | bruno@email.com | bruno    |
 
   Scenario Outline: Create a Profile
-    When I create a profile using "<uri>" with "<name>" and <postId>
-    Then I should see the new profile has name "<name>" and <postId>
+    When I create a profile using "<path>", "<postIdKey>", <postIdValue>, "<name>"
+    Then the new profile has name "<name>" and postId <postIdValue>
 
     Examples:
-      | uri              | name | postId |
-      | /posts/3/profile | Sams | 3      |
-      | /posts/4/profile | Tom  | 4      |
+      | path                    | postIdKey | postIdValue | name |
+      | /posts/{postId}/profile | postId    | 3           | Sams |
+      | /posts/{postId}/profile | postId    | 4           | Tom  |

@@ -18,10 +18,10 @@ public class SharedSetps {
 
     @Given("I authenticate using:")
     public void authenticate(DataTable dataTable) {
-        String uri = dataTable.row(1).get(0);
-        String email = dataTable.row(1).get(1);
-        String password = dataTable.row(1).get(2);
-        String token = new AuthenticationService().authenticate(uri, new UserLoginDetails(email, password));
+        String path = dataTable.cell(1, 0);
+        String email = dataTable.cell(1, 1);
+        String password = dataTable.cell(1, 2);
+        String token = new AuthenticationService().authenticate(path, new UserLoginDetails(email, password));
         assertThat(token, is(notNullValue()));
         scenarioContext.put("token", token);
     }
