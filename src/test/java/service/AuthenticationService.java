@@ -9,7 +9,7 @@ public class AuthenticationService {
     public String authenticate(String path, UserLoginDetails userLoginDetails) {
         Response response = new RestfulApiService()
                 .setPath(path)
-                .setUserDetails(userLoginDetails)
+                .setBody(userLoginDetails)
                 .setHttpMethod(HttpMethod.POST)
                 .send();
 

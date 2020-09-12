@@ -12,6 +12,16 @@
     },
     {
       "id": 3
+    },
+    {
+      "id": 10,
+      "title": "API Testing course",
+      "author": null
+    },
+    {
+      "id": 11,
+      "title": "C# Testing course",
+      "author": null
     }
   ],
   "comments": [

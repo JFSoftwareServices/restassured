@@ -5,8 +5,6 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import model.UserLoginDetails;
 import request.HttpMethod;
 import request.HttpRequest;
 
@@ -22,7 +20,6 @@ public class RestfulApiService {
     }
 
     private RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
-    private RequestSpecification requestSpecification = requestSpecBuilder.build();
     private HttpMethod httpMethod;
     private String path;
 
@@ -36,34 +33,29 @@ public class RestfulApiService {
         return this;
     }
 
-    public RestfulApiService setUserDetails(UserLoginDetails userDetails) {
-        requestSpecification.body(userDetails);
-        return this;
-    }
-
     public RestfulApiService setHeader(Header header) {
-        requestSpecification.header(header);
+        requestSpecBuilder.addHeader(header.getName(), header.getValue());
         return this;
     }
 
     public RestfulApiService setBody(Object body) {
-        requestSpecification.body(body);
+        requestSpecBuilder.setBody(body);
         return this;
     }
 
-    public Response send() {
-        requestSpecification.contentType(ContentType.JSON);
-        HttpRequest httpRequest = httpMethod.createHttpRequest();
-        return httpRequest.send(path, requestSpecification);
-    }
-
     public RestfulApiService setPathParams(Map<String, Integer> params) {
-        requestSpecification.pathParams(params);
+        requestSpecBuilder.addPathParams(params);
         return this;
     }
 
     public RestfulApiService setQueryParams(Map<String, Integer> queryParams) {
-        requestSpecification.queryParams(queryParams);
+        requestSpecBuilder.addQueryParams(queryParams);
         return this;
+    }
+
+    public Response send() {
+        requestSpecBuilder.setContentType(ContentType.JSON);
+        HttpRequest httpRequest = httpMethod.createHttpRequest();
+        return httpRequest.send(path, requestSpecBuilder.build());
     }
 }

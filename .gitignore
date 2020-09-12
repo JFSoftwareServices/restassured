@@ -11,5 +11,4 @@ log/
 target/
 
 # Fake Server
-fake_server/node_modules/
-fake_server/package-lock.json
+fake_server/
