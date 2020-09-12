@@ -1,6 +1,6 @@
 Feature: Delete Post
 
-  Background:
+  Background: Authenticate
     Given I authenticate using:
       | path        | email           | password |
       | /auth/login | bruno@email.com | bruno    |
@@ -11,7 +11,7 @@ Feature: Delete Post
     And I request for a post with "<path>" and id <id>
     Then I should not see a post
 
-    Examples:
+    Examples: Post parameters
       | path   | title       | author | id |
       | /posts | API Testing | Jide   | 10 |
       | /posts | C# Testing  | Ade    | 11 |

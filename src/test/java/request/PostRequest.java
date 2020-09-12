@@ -3,11 +3,11 @@ package request;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-import static request.HttpRequest.request;
+import static io.restassured.RestAssured.given;
 
 public class PostRequest implements HttpRequest {
     @Override
-    public Response send(String path, RequestSpecification requestSpecification) {
-        return request(requestSpecification).post(path);
+    public Response send(RequestSpecification requestSpecification) {
+        return given().spec(requestSpecification).post();
     }
 }

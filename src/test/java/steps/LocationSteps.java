@@ -3,7 +3,7 @@ package steps;
 import com.google.gson.reflect.TypeToken;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.http.Header;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.Response;
 import model.Location;
@@ -29,7 +29,7 @@ public class LocationSteps {
     public void assertStreetName(String name) {
         Type type = new TypeToken<List<Location>>() {
         }.getType();
-        List<Location> locations = scenarioContext.get("response", Response.class)
+        List<Location> locations = scenarioContext.get(Constants.RESPONSE, Response.class)
                 .getBody().as(type, ObjectMapperType.GSON);
         assertThat(locations.get(0).getAddress().get(0).getStreet(), equalTo(name));
         assertThat(locations.get(0).getAddress().get(1).getStreet(), equalTo(name));
@@ -39,13 +39,14 @@ public class LocationSteps {
     public void requestForLocation(String path, String locationIdKey, Integer locationIdValue) {
         Map<String, Integer> queryParams = new HashMap<>();
         queryParams.put(locationIdKey, locationIdValue);
-        String token = scenarioContext.get("token", String.class);
-        Response response = new RestfulApiService()
-                .setPath(path)
-                .setQueryParams(queryParams)
-                .setHttpMethod(HttpMethod.GET)
-                .setHeader(new Header("Authorization", "Bearer " + token))
-                .send();
-        scenarioContext.put("response", response);
+        String token = scenarioContext.get(Constants.TOKEN, String.class);
+        RequestSpecBuilder builder = new RequestSpecBuilder();
+        builder
+                .setBasePath(path)
+                .addQueryParams(queryParams)
+                .addHeader(Constants.AUTHORIZATION, Constants.BEARER + " "  + token)
+                .build();
+        Response response = RestfulApiService.send(builder, HttpMethod.GET);
+        scenarioContext.put(Constants.RESPONSE, response);
     }
 }

@@ -1,6 +1,6 @@
 Feature: Request Post
 
-  Background:
+  Background: Authenticate
     Given I authenticate using:
       | path        | email           | password |
       | /auth/login | bruno@email.com | bruno    |
@@ -12,7 +12,7 @@ Feature: Request Post
   Scenario Outline: Verify post request
     When I request for a post using "<path>"
     Then I should see author name as "Karthik KK"
-    Examples:
+    Examples: Post parameters
       | path     |
       | /posts/1 |
       | /posts/2 |
@@ -20,7 +20,7 @@ Feature: Request Post
   Scenario Outline: Verify posts request are in the correct format
     When I request for a post using "<path>"
     Then the response from the request for a post should be in the correct format
-    Examples:
+    Examples: Post parameters
       | path     |
       | /posts/1 |
       | /posts/2 |

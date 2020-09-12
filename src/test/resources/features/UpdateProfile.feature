@@ -1,8 +1,6 @@
 Feature: Update Profile
 
-  Background:
-
-  Background:
+  Background: Authenticate
     Given I authenticate using:
       | path        | email           | password |
       | /auth/login | bruno@email.com | bruno    |
@@ -10,6 +8,6 @@ Feature: Update Profile
   Scenario Outline: Update profile name
     When I update profile at uri "<path>" to name "<name>"
     Then I should see profile name as "<updatedName>"
-    Examples:
+    Examples: Profile parameters
       | path             | name | updatedName |
       | /posts/2/profile | Sam  | Sam         |

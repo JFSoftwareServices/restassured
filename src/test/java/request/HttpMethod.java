@@ -9,7 +9,7 @@ public enum HttpMethod {
         this.httpRequest = httpRequest;
     }
 
-    public HttpRequest createHttpRequest() {
+    public HttpRequest getHttpRequest() {
         return httpRequest;
     }
 }
